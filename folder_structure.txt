@@ -1,0 +1,82 @@
+.
+├── README.md # all cmds
+├── alembic.ini # bd details
+├── app
+│   ├── __init__.py
+│   ├── api
+│   │   ├── __init__.py
+│   │   ├── dependencies # 
+│   │   │   ├── __init__.py
+│   │   │   ├── database.py # db connection
+│   │   │   ├── limiter.py # limit of api hits from a system
+│   │   │   ├── paginated.py # pagination
+│   │   │   └── samples.py
+│   │   └── v1
+│   │       ├── __init__.py
+│   │       ├── api.py
+│   │       └── endpoints
+│   │           ├── __init__.py
+│   │           ├── authentication.py # auth module CRUDL
+│   │           ├── sample.py
+│   │           ├── tenants.py # teneat apis CRUDL
+│   │           └── users.py # users apis CRUDL
+│   ├── core
+│   │   ├── __init__.py
+│   │   ├── config.py # configuring all the db connects, secret keys & password
+│   │   ├── events.py # event api's CRUDL
+│   │   ├── logging.py # logs 
+│   │   └── settings
+│   │       ├── __init__.py
+│   │       ├── app.py  
+│   │       ├── base.py # local env ... settings
+│   │       ├── development.py # development env settings
+│   │       ├── production.py # production env settings
+│   │       └── test.py # test env settings
+│   ├── db
+│   │   ├── __init__.py
+│   │   ├── events.py
+│   │   ├── migrations  # db migratios file
+│   │   │   ├── README
+│   │   │   ├── env.py
+│   │   │   ├── script.py.mako
+│   │   │   └── versions
+│   │   │       ├── 226107d3f03b_base_commit.py
+│   │   ├── queries
+│   │   │   ├── __init__.py
+│   │   │   ├── queries.py # sql queries 
+│   │   │   ├── queries.pyi
+│   │   │   └── sql
+│   │   │       └── samples.sql
+│   │   └── session.py
+│   ├── main.py
+│   ├── middleware    
+│   │   ├── __init__.py
+│   │   ├── error.py
+│   │   └── request.py
+│   ├── models           # tables
+│   │   ├── __init__.py
+│   │   ├── base.py
+│   │   └── sample.py
+│   ├── repositories     # based on clients we will access the respective repo
+│   │   ├── __init__.py
+│   │   ├── base.py
+│   │   ├── sample.py
+│   │   ├── tenants.py
+│   │   └── users.py
+│   └── schemas      # response payload
+│       ├── __init__.py
+│       ├── base.py
+│       ├── sample.py
+│       └── users.py
+├── poetry.lock
+├── pyproject.toml  # packages
+├── pytest.ini
+└── tests     # unit test 
+    ├── __init__.py
+    ├── conftest.py
+    ├── fake_asyncpg_pool.py
+    ├── test_api
+    │   ├── __init__.py
+    │   └── test_samples.py
+    └── test_main.py 
+

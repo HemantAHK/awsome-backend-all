@@ -31,5 +31,3 @@ Then create `.env` file (or rename and modify `.env.example`) in project root an
     echo SECRET_KEY=$(openssl rand -hex 32) >> .env
 
 pytest --cov=tests --cov-fail-under=70
-
-pytest --cov=tests --cov-fail-under=70
