@@ -1,82 +1,156 @@
 .
-├── README.md # all cmds
-├── alembic.ini # bd details
+├── Dockerfile
+├── README.md
+├── alembic.ini
 ├── app
 │   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-311.pyc
+│   │   └── main.cpython-311.pyc
 │   ├── api
 │   │   ├── __init__.py
-│   │   ├── dependencies # 
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-311.pyc
+│   │   │   └── paginated.cpython-311.pyc
+│   │   ├── dependencies
 │   │   │   ├── __init__.py
-│   │   │   ├── database.py # db connection
-│   │   │   ├── limiter.py # limit of api hits from a system
-│   │   │   ├── paginated.py # pagination
+│   │   │   ├── __pycache__
+│   │   │   │   ├── __init__.cpython-311.pyc
+│   │   │   │   ├── database.cpython-311.pyc
+│   │   │   │   ├── limiter.cpython-311.pyc
+│   │   │   │   ├── paginated.cpython-311.pyc
+│   │   │   │   └── samples.cpython-311.pyc
+│   │   │   ├── database.py
+│   │   │   ├── limiter.py
+│   │   │   ├── paginated.py
 │   │   │   └── samples.py
 │   │   └── v1
 │   │       ├── __init__.py
+│   │       ├── __pycache__
+│   │       │   ├── __init__.cpython-311.pyc
+│   │       │   └── api.cpython-311.pyc
 │   │       ├── api.py
 │   │       └── endpoints
 │   │           ├── __init__.py
-│   │           ├── authentication.py # auth module CRUDL
+│   │           ├── __pycache__
+│   │           │   ├── __init__.cpython-311.pyc
+│   │           │   ├── authentication.cpython-311.pyc
+│   │           │   ├── sample.cpython-311.pyc
+│   │           │   ├── tenants.cpython-311.pyc
+│   │           │   └── users.cpython-311.pyc
+│   │           ├── authentication.py
 │   │           ├── sample.py
-│   │           ├── tenants.py # teneat apis CRUDL
-│   │           └── users.py # users apis CRUDL
+│   │           ├── tenants.py
+│   │           └── users.py
 │   ├── core
 │   │   ├── __init__.py
-│   │   ├── config.py # configuring all the db connects, secret keys & password
-│   │   ├── events.py # event api's CRUDL
-│   │   ├── logging.py # logs 
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-311.pyc
+│   │   │   ├── config.cpython-311.pyc
+│   │   │   ├── events.cpython-311.pyc
+│   │   │   └── logging.cpython-311.pyc
+│   │   ├── config.py
+│   │   ├── events.py
+│   │   ├── logging.py
 │   │   └── settings
 │   │       ├── __init__.py
-│   │       ├── app.py  
-│   │       ├── base.py # local env ... settings
-│   │       ├── development.py # development env settings
-│   │       ├── production.py # production env settings
-│   │       └── test.py # test env settings
+│   │       ├── __pycache__
+│   │       │   ├── __init__.cpython-311.pyc
+│   │       │   ├── app.cpython-311.pyc
+│   │       │   ├── base.cpython-311.pyc
+│   │       │   ├── development.cpython-311.pyc
+│   │       │   ├── production.cpython-311.pyc
+│   │       │   └── test.cpython-311.pyc
+│   │       ├── app.py
+│   │       ├── base.py
+│   │       ├── development.py
+│   │       ├── production.py
+│   │       └── test.py
 │   ├── db
 │   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-311.pyc
+│   │   │   ├── events.cpython-311.pyc
+│   │   │   └── session.cpython-311.pyc
 │   │   ├── events.py
-│   │   ├── migrations  # db migratios file
+│   │   ├── migrations
 │   │   │   ├── README
+│   │   │   ├── __pycache__
+│   │   │   │   └── env.cpython-311.pyc
 │   │   │   ├── env.py
 │   │   │   ├── script.py.mako
 │   │   │   └── versions
 │   │   │       ├── 226107d3f03b_base_commit.py
+│   │   │       └── __pycache__
+│   │   │           └── 226107d3f03b_base_commit.cpython-311.pyc
 │   │   ├── queries
 │   │   │   ├── __init__.py
-│   │   │   ├── queries.py # sql queries 
+│   │   │   ├── __pycache__
+│   │   │   │   ├── __init__.cpython-311.pyc
+│   │   │   │   └── queries.cpython-311.pyc
+│   │   │   ├── queries.py
 │   │   │   ├── queries.pyi
 │   │   │   └── sql
 │   │   │       └── samples.sql
 │   │   └── session.py
 │   ├── main.py
-│   ├── middleware    
+│   ├── middleware
 │   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-311.pyc
+│   │   │   ├── error.cpython-311.pyc
+│   │   │   └── request.cpython-311.pyc
 │   │   ├── error.py
 │   │   └── request.py
-│   ├── models           # tables
+│   ├── models
 │   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-311.pyc
+│   │   │   ├── base.cpython-311.pyc
+│   │   │   └── sample.cpython-311.pyc
 │   │   ├── base.py
 │   │   └── sample.py
-│   ├── repositories     # based on clients we will access the respective repo
+│   ├── repositories
 │   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-311.pyc
+│   │   │   ├── base.cpython-311.pyc
+│   │   │   └── sample.cpython-311.pyc
 │   │   ├── base.py
 │   │   ├── sample.py
 │   │   ├── tenants.py
 │   │   └── users.py
-│   └── schemas      # response payload
+│   └── schemas
 │       ├── __init__.py
+│       ├── __pycache__
+│       │   ├── __init__.cpython-311.pyc
+│       │   ├── base.cpython-311.pyc
+│       │   └── sample.cpython-311.pyc
 │       ├── base.py
 │       ├── sample.py
 │       └── users.py
+├── docker-compose.yml
+├── folder_structure.txt
+├── nginx
+│   └── nginx.conf
 ├── poetry.lock
-├── pyproject.toml  # packages
+├── pyproject.toml
 ├── pytest.ini
-└── tests     # unit test 
+└── tests
     ├── __init__.py
+    ├── __pycache__
+    │   ├── __init__.cpython-311.pyc
+    │   ├── conftest.cpython-311-pytest-8.0.0.pyc
+    │   ├── fake_asyncpg_pool.cpython-311.pyc
+    │   └── test_main.cpython-311-pytest-8.0.0.pyc
     ├── conftest.py
     ├── fake_asyncpg_pool.py
     ├── test_api
     │   ├── __init__.py
+    │   ├── __pycache__
+    │   │   ├── __init__.cpython-311.pyc
+    │   │   └── test_samples.cpython-311-pytest-8.0.0.pyc
     │   └── test_samples.py
-    └── test_main.py 
+    └── test_main.py
 
+37 directories, 117 files
