@@ -1,7 +1,14 @@
-from typing import Dict, Union, List, Any
-from typing import Optional
+from typing import Any, Dict, List, Optional, Union
 
-from fastapi import APIRouter, Body, Depends, Query, Request, HTTPException, status
+from fastapi import (
+    APIRouter,
+    Body,
+    Depends,
+    HTTPException,
+    Query,
+    Request,
+    status,
+)
 
 from app.api.dependencies.database import get_repository
 from app.api.dependencies.limiter import limiter
@@ -12,7 +19,12 @@ from app.api.dependencies.paginated import (
 )
 from app.api.dependencies.samples import valid_sample_id
 from app.repositories.sample import SamplesRepository
-from app.schemas.sample import Sample, SampleInCreate, SampleInResponse, SampleInUpdate
+from app.schemas.sample import (
+    Sample,
+    SampleInCreate,
+    SampleInResponse,
+    SampleInUpdate,
+)
 
 router = APIRouter()
 
@@ -39,7 +51,8 @@ async def get_all_samples(
     page: int = Query(1, description="Page number (starts from 1)"),
     size: int = Query(10, description="Number of items per page"),
     filter_params: Optional[str] = Query(
-        None, description="Query filter params"),
+        None, description="Query filter params"
+    ),
     samples_repo: SamplesRepository = Depends(
         get_repository(SamplesRepository)
     ),
@@ -78,10 +91,12 @@ async def get_sample(
 @router.put("/{sample_id}", name="sample:update")
 @limiter.limit("1/second")
 async def update_sample(
-    request: Request,     payload: SampleInUpdate,
-    current_sample: Sample = Depends(valid_sample_id),    samples_repo: SamplesRepository = Depends(
+    request: Request,
+    payload: SampleInUpdate,
+    current_sample: Sample = Depends(valid_sample_id),
+    samples_repo: SamplesRepository = Depends(
         get_repository(SamplesRepository)
-    )
+    ),
 ) -> SampleInResponse:
     """
     Update a sample.
@@ -93,15 +108,19 @@ async def update_sample(
             detail="sample is deleted",
         )
 
-    return await samples_repo.update(obj=current_sample, **payload.__dict__)
+    return await samples_repo.update(
+        obj=current_sample, **payload.__dict__
+    )
 
 
 @router.delete("/{sample_id}", name="sample:delete")
 @limiter.limit("1/second")
 async def delete_sample(
-    request: Request, current_sample: Sample = Depends(valid_sample_id),     samples_repo: SamplesRepository = Depends(
+    request: Request,
+    current_sample: Sample = Depends(valid_sample_id),
+    samples_repo: SamplesRepository = Depends(
         get_repository(SamplesRepository)
-    )
+    ),
 ) -> None:
 
     """
@@ -120,9 +139,11 @@ async def delete_sample(
 @router.delete("/{sample_id}/delete", name="sample:remove")
 @limiter.limit("1/second")
 async def remove_sample(
-    request: Request, current_sample: Sample = Depends(valid_sample_id), samples_repo: SamplesRepository = Depends(
+    request: Request,
+    current_sample: Sample = Depends(valid_sample_id),
+    samples_repo: SamplesRepository = Depends(
         get_repository(SamplesRepository)
-    )
+    ),
 ) -> None:
 
     """

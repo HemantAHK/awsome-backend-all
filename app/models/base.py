@@ -10,7 +10,7 @@ from sqlalchemy.dialects.postgresql import UUID
 
 class ActiveStatusMixin:
     is_active = cast(
-        bool, Column(Boolean, default=True, server_default="true")
+        bool, Column(Boolean, default=True, server_default=text("true"))
     )
     deactivated_at = cast(bool, Column(DateTime))
 
@@ -22,6 +22,7 @@ class CreatedMixin:
         Column(
             DateTime,
             default=datetime.now(tz=timezone("UTC")),
+            server_default=text("CURRENT_TIMESTAMP"),
         ),
     )
 
@@ -34,6 +35,7 @@ class CreatedModifiedMixin:
             DateTime,
             default=datetime.now(tz=timezone("UTC")),
             onupdate=datetime.now(tz=timezone("UTC")),
+            server_default=text("CURRENT_TIMESTAMP"),
         ),
     )
 

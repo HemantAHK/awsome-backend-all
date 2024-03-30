@@ -1,16 +1,21 @@
-from typing import Any, Dict, List, Union, Optional
-from fastapi import HTTPException, status
+from typing import Any, Dict, List, Optional, Union
 
 from asyncpg import Connection, Record
+from fastapi import HTTPException, status
+from pydantic import UUID4
 from pypika import Query, Table, functions
 from pypika.terms import Criterion
 
 from app.db.queries.queries import queries
 from app.models.sample import DBSample
-from app.repositories.base import IRepository, BaseRepository
-from app.schemas.sample import SampleInCreate, SampleInResponse, SampleInUpdate, Sample, SampleInDB
-
-from pydantic import UUID4
+from app.repositories.base import BaseRepository, IRepository
+from app.schemas.sample import (
+    Sample,
+    SampleInCreate,
+    SampleInDB,
+    SampleInResponse,
+    SampleInUpdate,
+)
 
 
 class SamplesRepository(BaseRepository, IRepository[DBSample]):
@@ -40,7 +45,9 @@ class SamplesRepository(BaseRepository, IRepository[DBSample]):
         # Apply additional filters based on input
         if filters:
             query = self._apply_filters_to_query(query, filters)
-            count_query = self._apply_filters_to_query(count_query, filters)
+            count_query = self._apply_filters_to_query(
+                count_query, filters
+            )
 
         # Add offset and limit
         if offset is not None:
@@ -49,8 +56,11 @@ class SamplesRepository(BaseRepository, IRepository[DBSample]):
             query = query.limit(limit)
 
         # Count the number of records matching the filters
-        count_query = Query.from_(db_table).select(
-            functions.Count('*')).where(db_table.is_active == True)
+        count_query = (
+            Query.from_(db_table)
+            .select(functions.Count("*"))
+            .where(db_table.is_active == True)
+        )
 
         # Execute the query within a transaction
         async with self.connection.transaction():
@@ -58,7 +68,9 @@ class SamplesRepository(BaseRepository, IRepository[DBSample]):
             samples_rows = await self.connection.fetch(str(query))
 
             # Execute the count query to get total count
-            total_count = await self.connection.fetchval(str(count_query))
+            total_count = await self.connection.fetchval(
+                str(count_query)
+            )
 
         result = []
 
@@ -66,15 +78,20 @@ class SamplesRepository(BaseRepository, IRepository[DBSample]):
             respons = await self._get_sample_from_db_record(
                 sample_row=sample_row,
             )
-            result.append(SampleInResponse(
-                **respons.model_dump(exclude_none=True)))
+            result.append(
+                SampleInResponse(
+                    **respons.model_dump(exclude_none=True)
+                )
+            )
 
         return {"data": result, "total_count": total_count}
 
     async def get(self, uuid: str) -> DBSample:
 
         async with self.connection.transaction():
-            sample_row = await queries.get_sample_by_uuid(self.connection, uuid)
+            sample_row = await queries.get_sample_by_uuid(
+                self.connection, uuid
+            )
 
         if sample_row is None:
             raise HTTPException(
@@ -84,13 +101,14 @@ class SamplesRepository(BaseRepository, IRepository[DBSample]):
 
         return await self._get_sample_from_db_record(
             sample_row=sample_row,
-
         )
 
     async def get_in_db(self, uuid: str) -> DBSample:
 
         async with self.connection.transaction():
-            sample_row = await queries.get_sample_by_uuid_in_db(self.connection, uuid)
+            sample_row = await queries.get_sample_by_uuid_in_db(
+                self.connection, uuid
+            )
 
         if sample_row is None:
             raise HTTPException(
@@ -100,7 +118,6 @@ class SamplesRepository(BaseRepository, IRepository[DBSample]):
 
         return await self._get_sample_from_db_record_in_db(
             sample_row=sample_row,
-
         )
 
     async def add(self, payload: SampleInCreate) -> DBSample:
@@ -112,10 +129,11 @@ class SamplesRepository(BaseRepository, IRepository[DBSample]):
 
         return await self._get_sample_from_db_record(
             sample_row=sample_row,
-
         )
 
-    async def update(self, obj: Sample, name: Optional[str], task: Optional[str]) -> DBSample:
+    async def update(
+        self, obj: Sample, name: Optional[str], task: Optional[str]
+    ) -> DBSample:
 
         obj.name = name or obj.name
         obj.task = task or obj.task
@@ -135,7 +153,7 @@ class SamplesRepository(BaseRepository, IRepository[DBSample]):
 
     async def delete(self, uuid: UUID4) -> None:
         """
-        Delete an object from the repository by its id.
+        Soft delete an object from the repository by its id.
 
         :param session: SQLAlchemy Session object
         :param id: ID of the object
@@ -152,7 +170,7 @@ class SamplesRepository(BaseRepository, IRepository[DBSample]):
 
     async def remove(self, uuid: UUID4) -> None:
         """
-        Soft delete an object from the repository by its id.
+        Delete an object from the repository by its id.
 
         :param session: SQLAlchemy Session object
         :param id: ID of the object
@@ -190,7 +208,9 @@ class SamplesRepository(BaseRepository, IRepository[DBSample]):
             is_active=sample_row["is_active"],
         )
 
-    def _apply_filters_to_query(self, query: Query, filters: Dict[str, Union[Any, List[Any]]]) -> Query:
+    def _apply_filters_to_query(
+        self, query: Query, filters: Dict[str, Union[Any, List[Any]]]
+    ) -> Query:
         """
         Apply additional filters to the query based on input filters.
 

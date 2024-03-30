@@ -8,7 +8,7 @@ from app.core.settings.app import Settings
 class DevAppSettings(Settings):
     DEBUG: bool = True
 
-    APP_NAME: str = "Dev FastAPI example application"
+    APP_NAME: str = "EMS Backend (dev)"
 
     LOGGING_LEVEL: int = logging.DEBUG
 

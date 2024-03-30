@@ -48,5 +48,3 @@ WHERE uuid = :uuid
 DELETE
 FROM samples
 WHERE uuid = :uuid
-
-

@@ -31,3 +31,6 @@ Then create `.env` file (or rename and modify `.env.example`) in project root an
     echo SECRET_KEY=$(openssl rand -hex 32) >> .env
 
 pytest --cov=tests --cov-fail-under=70
+
+DOCKER_BUILDKIT=1 docker build -t ems-local .
+docker run -e APP_ENV=dev -p 8000:8000 ems-local

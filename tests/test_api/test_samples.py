@@ -1,18 +1,21 @@
-
 import unittest
+from typing import Any, Dict, List, Tuple, Type, Union
+from unittest.mock import MagicMock
 
 import pytest
 from fastapi import FastAPI, HTTPException
-from app.schemas.sample import SampleInResponse, SampleInCreate
-from app.repositories.sample import SamplesRepository
-from httpx import AsyncClient
-from starlette.status import HTTP_403_FORBIDDEN, HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_422_UNPROCESSABLE_ENTITY
 from fastapi.exceptions import ResponseValidationError
-from typing import List, Tuple, Dict, Any, Type, Union
-
-from unittest.mock import MagicMock
+from httpx import AsyncClient
 from loguru import logger
+from starlette.status import (
+    HTTP_200_OK,
+    HTTP_400_BAD_REQUEST,
+    HTTP_403_FORBIDDEN,
+    HTTP_422_UNPROCESSABLE_ENTITY,
+)
 
+from app.repositories.sample import SamplesRepository
+from app.schemas.sample import SampleInCreate, SampleInResponse
 
 # # This is a global variable that will store the test cases from the happy path tests
 happy_path_tests = []
@@ -29,10 +32,18 @@ happy_path_tests = []
     "test_id,payload,status_code,response_model",
     [
         # Happy path tests with various realistic test values
-        ("happy-1", {"name": "Sample A", "task": "Task A"},
-         HTTP_200_OK, SampleInResponse),
-        ("happy-2", {"name": "Sample B", "task": "Task B"},
-         HTTP_200_OK, SampleInResponse),
+        (
+            "happy-1",
+            {"name": "Sample A", "task": "Task A"},
+            HTTP_200_OK,
+            SampleInResponse,
+        ),
+        (
+            "happy-2",
+            {"name": "Sample B", "task": "Task B"},
+            HTTP_200_OK,
+            SampleInResponse,
+        ),
         # # Edge cases
         # ("edge-1", {"name": "", "task": ""}, HTTP_422_UNPROCESSABLE_ENTITY,
         #  HTTPException),  # Empty name and task
@@ -40,7 +51,6 @@ happy_path_tests = []
         # ("error-1", {"name": "Sample C", "task": "Task C"},
         #  HTTP_400_BAD_REQUEST, HTTPException),  # Error case
     ],
-
 )
 async def test_create_sample(
     test_id: str,
@@ -57,7 +67,9 @@ async def test_create_sample(
 
     # Act
     try:
-        response = await async_client.post(app.url_path_for("sample:create"), json=payload)
+        response = await async_client.post(
+            app.url_path_for("sample:create"), json=payload
+        )
     except ResponseValidationError as e:
         logger.error(f"Response validation error: {e}")
         logger.error(f"Validation errors: {e.errors()}")
@@ -74,10 +86,17 @@ async def test_create_sample(
         # If the test is a happy path test, store the entire test case for later use
         if test_id.startswith("happy"):
             happy_path_tests.append(
-                (test_id, payload, status_code, response_model, response_json["uuid"]))
+                (
+                    test_id,
+                    payload,
+                    status_code,
+                    response_model,
+                    response_json["uuid"],
+                )
+            )
 
     elif response_model is HTTPException:
-        assert response.json().get('detail') is not None
+        assert response.json().get("detail") is not None
 
 
 # @pytest.mark.anyio

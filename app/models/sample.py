@@ -1,6 +1,8 @@
 import os
+
 from sqlalchemy import Column, String
 
+from app.core.config import get_app_settings
 from app.db.session import BaseDBModel
 from app.models.base import (
     ActiveStatusMixin,
@@ -9,7 +11,6 @@ from app.models.base import (
     IdMixin,
     UuidMixin,
 )
-from app.core.config import get_app_settings
 
 
 class DBSample(

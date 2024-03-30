@@ -10,7 +10,7 @@ repos:
       # - id: no-commit-to-branch
       #   args: ["--branch", "main", "--branch", "dev"]
       - id: check-docstring-first
-      - id: check-executables-have-shebangs
+        # - id: check-executables-have-shebangs
         exclude: ^(.*\.lock|.*\.toml)$
       - id: check-case-conflict
       # - id: check-added-large-files
@@ -63,21 +63,22 @@ repos:
       - id: black
         args: [--line-length=72]
 
-  # - repo: https://github.com/pre-commit/mirrors-mypy
-  #   rev: "v1.6.1"
-  #   hooks:
-  #     - id: mypy
-  #       args: [--strict]
-  #       additional_dependencies:
-  #         - fastapi
-  #         - pydantic
-  #         - types-python-jose
-  #         - types-toml
-  #         - types-ujson
-  #         - types-psycopg2
-  #         - types-pytz
-  #         - pydantic_settings
-  #         - loguru
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: "v1.6.1"
+    hooks:
+      - id: mypy
+        args: [--strict]
+        exclude: queries.py
+        additional_dependencies:
+          - fastapi
+          - pydantic
+          - types-python-jose
+          - types-toml
+          - types-ujson
+          - types-psycopg2
+          - types-pytz
+          - pydantic_settings
+          - loguru
 
   # - repo: local
   #   hooks:

@@ -4,7 +4,7 @@ from fastapi import Depends, HTTPException, Path, status
 
 from app.api.dependencies.database import get_repository
 from app.repositories.sample import SamplesRepository
-from app.schemas.sample import SampleInResponse, SampleInDB
+from app.schemas.sample import SampleInDB, SampleInResponse
 
 
 async def valid_sample_id(

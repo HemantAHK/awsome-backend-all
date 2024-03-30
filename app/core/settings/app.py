@@ -44,10 +44,10 @@ class APISettings(BaseAppSettings):
 
 class PostgresSettings(BaseAppSettings):
     POSTGRES_USER: str = "postgres"
-    POSTGRES_PASSWORD: str = "postgres"
+    POSTGRES_PASSWORD: str = "Password"
     POSTGRES_SERVER: str = "localhost"
     POSTGRES_PORT: int = 5432
-    POSTGRES_DB: str = "awsome-backend"
+    POSTGRES_DB: str = "ems"
     POSTGRES_SYNC_PREFIX: str = "postgresql://"
     POSTGRES_ASYNC_PREFIX: str = "postgresql+asyncpg://"
     POSTGRES_URI: str = f"{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}:{POSTGRES_PORT}/{POSTGRES_DB}"
@@ -63,6 +63,7 @@ class PostgresSettings(BaseAppSettings):
     POOL: str = "~sqlalchemy.pool.QueuePool"
     MAX_CONNECTION_COUNT: int = 10
     MIN_CONNECTION_COUNT: int = 10
+    POSTGRES_SCHEMA: str = "dev"
 
 
 class CryptSettings(BaseAppSettings):
